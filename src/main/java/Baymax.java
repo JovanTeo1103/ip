@@ -55,13 +55,88 @@ public class Baymax {
                     }
                 }
             }
-            case "todo" -> {}
-            case "deadline" -> {}
-            case "event" -> {}
-            default -> {
-                list[taskCount] = new Task(input);
+            case "todo" -> {
+                System.out.println("Got it. I've added this task:");
+                list[taskCount] = new Todo(input);
                 taskCount++;
-                System.out.printf("%s\nadded: %s\n%s\n", HORIZONTAL, input, HORIZONTAL);
+                System.out.println(list[taskCount - 1]);
+                System.out.printf("Now you have %d tasks in the list.\n", taskCount);
+                System.out.println(HORIZONTAL);
+            }
+            case "deadline" -> {
+                System.out.println(HORIZONTAL);
+                System.out.println("Got it. I've added this task:");
+                int byIndex = -1;
+
+                // Looks for /by string
+                for (int i = 1; i < parts.length; i++) {
+                    if (parts[i].equals("/by")) {
+                        byIndex = i;
+                        break;
+                    }
+                }
+
+                if (byIndex != -1) {
+                    // Combines words before /by as taskName
+                    StringBuilder taskName = new StringBuilder();
+                    for (int i = 1; i < byIndex; i++) {
+                        taskName.append(parts[i]).append(" ");
+                    }
+
+                    // Combines words after /by as by
+                    StringBuilder by = new StringBuilder();
+                    for (int i = byIndex + 1; i < parts.length; i++) {
+                        by.append(parts[i]).append(" ");
+                    }
+
+                    list[taskCount] = new Deadline(taskName.toString().trim(),
+                            by.toString().trim());
+                    taskCount++;
+                    System.out.println(list[taskCount - 1]);
+                    System.out.printf("Now you have %d tasks in the list.\n", taskCount);
+                    System.out.println(HORIZONTAL);
+                }
+            }
+            case "event" -> {
+                System.out.println(HORIZONTAL);
+                System.out.println("Got it. I've added this task:");
+
+                int fromIndex = -1;
+                int toIndex = -1;
+
+                // Looks for /from and /to string
+                for (int i = 0; i < parts.length; i++) {
+                    if (parts[i].equals("/from")) fromIndex = i;
+                    if (parts[i].equals("/to")) toIndex = i;
+                }
+
+                if (fromIndex != -1 && toIndex != -1) {
+                    // Combines words before /from as taskName
+                    StringBuilder taskName = new StringBuilder();
+                    for (int i = 1; i < fromIndex; i++) {
+                        taskName.append(parts[i]).append(" ");
+                    }
+
+                    // Combines words between /from and /to as from
+                    StringBuilder from = new StringBuilder();
+                    for (int i = fromIndex + 1; i < toIndex; i++) {
+                        from.append(parts[i]).append(" ");
+                    }
+
+                    // Combines words after /to as to
+                    StringBuilder to = new StringBuilder();
+                    for (int i = toIndex + 1; i < parts.length; i++) {
+                        to.append(parts[i]).append(" ");
+                    }
+
+                    list[taskCount] = new Event(taskName.toString().trim(),
+                            from.toString().trim(),
+                            to.toString().trim());
+                    taskCount++;
+                    System.out.println(list[taskCount - 1]);
+                    System.out.printf("Now you have %d tasks in the list.\n", taskCount);
+                    System.out.println(HORIZONTAL);
+                }
             }
         }
         return taskCount;
