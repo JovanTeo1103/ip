@@ -5,8 +5,6 @@ public class Baymax {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-
         int taskCount = 0;
         final Task[] list = new Task[100];
 
@@ -57,6 +55,9 @@ public class Baymax {
                     }
                 }
             }
+            case "todo" -> {}
+            case "deadline" -> {}
+            case "event" -> {}
             default -> {
                 list[taskCount] = new Task(input);
                 taskCount++;
