@@ -13,14 +13,20 @@ public class Baymax {
 
         while (true) {
             String input = scanner.nextLine();
-            int result = handleCommand(input, list, taskCount);
-            if (result == -1) break; // bye command detected break out
-            taskCount = result;
+            try {
+                int result = handleCommand(input, list, taskCount);
+                if (result == -1) break; // bye command detected
+                taskCount = result;
+            } catch (InvalidDescriptionException | InvalidCommandException e) {
+                System.out.println(HORIZONTAL);
+                System.out.println(e.getMessage());
+                System.out.println(HORIZONTAL);
+            }
         }
     }
 
     // Helper function to handle user commands
-    private static int handleCommand(String input, Task[] list, int taskCount) {
+    private static int handleCommand(String input, Task[] list, int taskCount) throws InvalidCommandException, InvalidDescriptionException {
         String[] parts = input.split(" ");
 
         switch (parts[0]) {
@@ -56,6 +62,9 @@ public class Baymax {
                 }
             }
             case "todo" -> {
+                if (parts.length == 1) {
+                    throw new InvalidDescriptionException("OHNO!!! The description of a todo cannot be empty T.T");
+                }
                 System.out.println("Got it. I've added this task:");
                 list[taskCount] = new Todo(input);
                 taskCount++;
@@ -76,26 +85,29 @@ public class Baymax {
                     }
                 }
 
-                if (byIndex != -1) {
-                    // Combines words before /by as taskName
-                    StringBuilder taskName = new StringBuilder();
-                    for (int i = 1; i < byIndex; i++) {
-                        taskName.append(parts[i]).append(" ");
-                    }
-
-                    // Combines words after /by as by
-                    StringBuilder by = new StringBuilder();
-                    for (int i = byIndex + 1; i < parts.length; i++) {
-                        by.append(parts[i]).append(" ");
-                    }
-
-                    list[taskCount] = new Deadline(taskName.toString().trim(),
-                            by.toString().trim());
-                    taskCount++;
-                    System.out.println(list[taskCount - 1]);
-                    System.out.printf("Now you have %d tasks in the list.\n", taskCount);
-                    System.out.println(HORIZONTAL);
+                if (byIndex == -1 || byIndex == 1) {
+                    throw new InvalidDescriptionException("OHNO!!! The description of the deadline is invalid T.T");
                 }
+
+                // Combines words before /by as taskName
+                StringBuilder taskName = new StringBuilder();
+                for (int i = 1; i < byIndex; i++) {
+                    taskName.append(parts[i]).append(" ");
+                }
+
+                // Combines words after /by as by
+                StringBuilder by = new StringBuilder();
+                for (int i = byIndex + 1; i < parts.length; i++) {
+                    by.append(parts[i]).append(" ");
+                }
+
+                list[taskCount] = new Deadline(taskName.toString().trim(),
+                        by.toString().trim());
+                taskCount++;
+                System.out.println(list[taskCount - 1]);
+                System.out.printf("Now you have %d tasks in the list.\n", taskCount);
+                System.out.println(HORIZONTAL);
+
             }
             case "event" -> {
                 System.out.println(HORIZONTAL);
@@ -110,34 +122,39 @@ public class Baymax {
                     if (parts[i].equals("/to")) toIndex = i;
                 }
 
-                if (fromIndex != -1 && toIndex != -1) {
-                    // Combines words before /from as taskName
-                    StringBuilder taskName = new StringBuilder();
-                    for (int i = 1; i < fromIndex; i++) {
-                        taskName.append(parts[i]).append(" ");
-                    }
-
-                    // Combines words between /from and /to as from
-                    StringBuilder from = new StringBuilder();
-                    for (int i = fromIndex + 1; i < toIndex; i++) {
-                        from.append(parts[i]).append(" ");
-                    }
-
-                    // Combines words after /to as to
-                    StringBuilder to = new StringBuilder();
-                    for (int i = toIndex + 1; i < parts.length; i++) {
-                        to.append(parts[i]).append(" ");
-                    }
-
-                    list[taskCount] = new Event(taskName.toString().trim(),
-                            from.toString().trim(),
-                            to.toString().trim());
-                    taskCount++;
-                    System.out.println(list[taskCount - 1]);
-                    System.out.printf("Now you have %d tasks in the list.\n", taskCount);
-                    System.out.println(HORIZONTAL);
+                if (fromIndex == -1 || toIndex == -1 || fromIndex >= toIndex || fromIndex == 1) {
+                    throw new InvalidDescriptionException("OHNO!!! The description of the event is invalid T.T");
                 }
+
+
+                // Combines words before /from as taskName
+                StringBuilder taskName = new StringBuilder();
+                for (int i = 1; i < fromIndex; i++) {
+                    taskName.append(parts[i]).append(" ");
+                }
+
+                // Combines words between /from and /to as from
+                StringBuilder from = new StringBuilder();
+                for (int i = fromIndex + 1; i < toIndex; i++) {
+                    from.append(parts[i]).append(" ");
+                }
+
+                // Combines words after /to as to
+                StringBuilder to = new StringBuilder();
+                for (int i = toIndex + 1; i < parts.length; i++) {
+                    to.append(parts[i]).append(" ");
+                }
+
+                list[taskCount] = new Event(taskName.toString().trim(),
+                        from.toString().trim(),
+                        to.toString().trim());
+                taskCount++;
+                System.out.println(list[taskCount - 1]);
+                System.out.printf("Now you have %d tasks in the list.\n", taskCount);
+                System.out.println(HORIZONTAL);
+
             }
+            default -> throw new InvalidCommandException("OHNO!!! I'm sorry, but that's not a valid command T.T");
         }
         return taskCount;
     }
