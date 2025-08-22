@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Baymax {
     private static final String HORIZONTAL = "__________________________________";
@@ -6,7 +7,7 @@ public class Baymax {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int taskCount = 0;
-        final Task[] list = new Task[100];
+        final ArrayList<Task> list = new ArrayList<>();
 
         System.out.printf("%s\nHello! I'm Baymax\nWhat can I do for you?\n%s\n",
                 HORIZONTAL, HORIZONTAL);
@@ -26,7 +27,7 @@ public class Baymax {
     }
 
     // Helper function to handle user commands
-    private static int handleCommand(String input, Task[] list, int taskCount) throws InvalidCommandException, InvalidDescriptionException {
+    private static int handleCommand(String input, ArrayList<Task> list, int taskCount) throws InvalidCommandException, InvalidDescriptionException {
         String[] parts = input.split(" ");
 
         switch (parts[0]) {
@@ -37,7 +38,7 @@ public class Baymax {
             case "list" -> {
                 System.out.printf("%s\nHere are the tasks in your list:\n", HORIZONTAL);
                 for (int i = 0; i < taskCount; i++) {
-                    System.out.printf((i + 1) + ".%s\n", list[i]);
+                    System.out.printf((i + 1) + ".%s\n", list.get(i));
                 }
                 System.out.println(HORIZONTAL);
             }
@@ -47,13 +48,13 @@ public class Baymax {
                         int x = Integer.parseInt(parts[1]);
                         if (x >= 1 && x <= taskCount) {
                             if (parts[0].equals("mark")) {
-                                list[x - 1].markAsDone();
+                                list.get(x - 1).markAsDone();
                                 System.out.printf(HORIZONTAL + "\nNice! I've marked this task as done:\n"
-                                        + list[x - 1] + "\n" + HORIZONTAL + "\n");
+                                        + list.get(x - 1) + "\n" + HORIZONTAL + "\n");
                             } else {
-                                list[x - 1].markAsUndone();
+                                list.get(x - 1).markAsUndone();
                                 System.out.printf(HORIZONTAL + "\nOK, I've marked this task as not done yet:\n"
-                                        + list[x - 1] + "\n" + HORIZONTAL + "\n");
+                                        + list.get(x - 1) + "\n" + HORIZONTAL + "\n");
                             }
                         }
                     } catch (NumberFormatException e) {
@@ -66,9 +67,9 @@ public class Baymax {
                     throw new InvalidDescriptionException("OHNO!!! The description of a todo cannot be empty T.T");
                 }
                 System.out.println("Got it. I've added this task:");
-                list[taskCount] = new Todo(input);
+                list.add(taskCount, new Todo(input));
                 taskCount++;
-                System.out.println(list[taskCount - 1]);
+                System.out.println(list.get(taskCount - 1));
                 System.out.printf("Now you have %d tasks in the list.\n", taskCount);
                 System.out.println(HORIZONTAL);
             }
@@ -101,10 +102,10 @@ public class Baymax {
                     by.append(parts[i]).append(" ");
                 }
 
-                list[taskCount] = new Deadline(taskName.toString().trim(),
-                        by.toString().trim());
+                list.add(taskCount, new Deadline(taskName.toString().trim(),
+                        by.toString().trim()));
                 taskCount++;
-                System.out.println(list[taskCount - 1]);
+                System.out.println(list.get(taskCount - 1));
                 System.out.printf("Now you have %d tasks in the list.\n", taskCount);
                 System.out.println(HORIZONTAL);
 
@@ -145,11 +146,11 @@ public class Baymax {
                     to.append(parts[i]).append(" ");
                 }
 
-                list[taskCount] = new Event(taskName.toString().trim(),
+                list.add(taskCount, new Event(taskName.toString().trim(),
                         from.toString().trim(),
-                        to.toString().trim());
+                        to.toString().trim()));
                 taskCount++;
-                System.out.println(list[taskCount - 1]);
+                System.out.println(list.get(taskCount - 1));
                 System.out.printf("Now you have %d tasks in the list.\n", taskCount);
                 System.out.println(HORIZONTAL);
 
