@@ -155,6 +155,24 @@ public class Baymax {
                 System.out.println(HORIZONTAL);
 
             }
+            case "delete" -> {
+                if (parts.length == 2) {
+                    try {
+                        int x = Integer.parseInt(parts[1]);
+                        if (x >= 1 && x <= taskCount) {
+                            Task removedTask = list.remove(x - 1);
+                            taskCount--;
+                            System.out.printf(HORIZONTAL + "\nNoted. I've removed this task:\n");
+                            System.out.println(removedTask);
+                            System.out.printf("Now you have %d tasks in the list.\n", taskCount);
+                            System.out.println(HORIZONTAL);
+
+                        }
+                    } catch (NumberFormatException e) {
+                        // ignore invalid number
+                    }
+                }
+            }
             default -> throw new InvalidCommandException("OHNO!!! I'm sorry, but that's not a valid command T.T");
         }
         return taskCount;
