@@ -67,7 +67,7 @@ public class Baymax {
                     throw new InvalidDescriptionException("OHNO!!! The description of a todo cannot be empty T.T");
                 }
                 System.out.println("Got it. I've added this task:");
-                list.add(taskCount, new Todo(input));
+                list.add(taskCount, new Todo(input, TaskType.TODO));
                 taskCount++;
                 System.out.println(list.get(taskCount - 1));
                 System.out.printf("Now you have %d tasks in the list.\n", taskCount);
@@ -103,6 +103,7 @@ public class Baymax {
                 }
 
                 list.add(taskCount, new Deadline(taskName.toString().trim(),
+                        TaskType.DEADLINE,
                         by.toString().trim()));
                 taskCount++;
                 System.out.println(list.get(taskCount - 1));
@@ -147,6 +148,7 @@ public class Baymax {
                 }
 
                 list.add(taskCount, new Event(taskName.toString().trim(),
+                        TaskType.EVENT,
                         from.toString().trim(),
                         to.toString().trim()));
                 taskCount++;

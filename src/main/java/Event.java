@@ -3,8 +3,8 @@ public class Event extends Task {
     protected String from;
     protected String to;
 
-    public Event(String taskName, String from, String to) {
-        super(taskName);
+    public Event(String taskName, TaskType taskType, String from, String to) {
+        super(taskName, taskType);
         this.from = from;
         this.to = to;
     }
