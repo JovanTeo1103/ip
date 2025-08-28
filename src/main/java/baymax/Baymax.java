@@ -1,3 +1,5 @@
+package baymax;
+
 import java.util.Scanner;
 
 public class Baymax {

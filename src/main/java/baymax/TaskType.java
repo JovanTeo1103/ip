@@ -1,3 +1,5 @@
+package baymax;
+
 public enum TaskType {
     TODO,
     DEADLINE,
