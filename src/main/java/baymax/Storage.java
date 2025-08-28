@@ -105,14 +105,11 @@ public class Storage {
     private String format(Task t) {
         String done = t.getStatus() ? "1" : "0";
 
-        if (t instanceof Todo) {
-            Todo td = (Todo) t;
+        if (t instanceof Todo td) {
             return String.format("T | %s | %s", done, td.getDescription());
-        } else if (t instanceof Deadline) {
-            Deadline d = (Deadline) t;
+        } else if (t instanceof Deadline d) {
             return String.format("D | %s | %s | %s", done, d.getDescription(), d.getBy().toString());
-        } else if (t instanceof Event) {
-            Event e = (Event) t;
+        } else if (t instanceof Event e) {
             return String.format("E | %s | %s | %s | %s", done, e.getDescription(), e.getFrom().toString(), e.getTo().toString());
         } else {
             throw new IllegalStateException("Unknown task subclass");
