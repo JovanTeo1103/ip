@@ -12,10 +12,6 @@ public class Ui {
         System.out.println(HORIZONTAL);
     }
 
-    public void showMessage(String msg) {
-        System.out.println(msg);
-    }
-
     public void showTaskAdded(Task t, int taskCount) {
         showLine();
         System.out.println("Got it. I've added this task:");
