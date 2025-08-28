@@ -1,4 +1,3 @@
-T | 1 | todo 1
-T | 0 | todo 2
-D | 0 | yoz | 2025-08-29
-E | 0 | yoo | 2025-09-29 | 2025-09-30
+T | 0 | Test todo
+D | 0 | Test deadline | 2025-08-30
+E | 0 | Test event | 2025-08-30 | 2025-09-01

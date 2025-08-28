@@ -22,6 +22,15 @@ public class Storage {
     }
 
     /**
+     * Constructs a baymax.Storage object using the given test file path.
+     * This constructor is used for testing purposes.
+     */
+    public Storage(Path filePath) {
+        this.filePath = filePath;
+    }
+
+
+    /**
      * Loads tasks from the storage file.
      * If the file or its parent directories do not exist, they are created
      * and an empty list is returned.
@@ -51,7 +60,6 @@ public class Storage {
         return tasks;
     }
 
-    //Saves all tasks to baymax.txt
     public void save(List<Task> tasks) {
         try {
             Files.createDirectories(filePath.getParent());
@@ -96,13 +104,19 @@ public class Storage {
      */
     private String format(Task t) {
         String done = t.getStatus() ? "1" : "0";
-        return switch (t) {
-            case Todo td -> String.format("T | %s | %s", done, td.getDescription());
-            case Deadline d -> String.format("D | %s | %s | %s", done, d.getDescription(), d.getBy().toString());
-            case Event e ->
-                    String.format("E | %s | %s | %s | %s", done, e.getDescription(), e.getFrom().toString(), e.getTo().toString());
 
-            default -> throw new IllegalStateException("Unknown task subclass");
-        };
+        if (t instanceof Todo) {
+            Todo td = (Todo) t;
+            return String.format("T | %s | %s", done, td.getDescription());
+        } else if (t instanceof Deadline) {
+            Deadline d = (Deadline) t;
+            return String.format("D | %s | %s | %s", done, d.getDescription(), d.getBy().toString());
+        } else if (t instanceof Event) {
+            Event e = (Event) t;
+            return String.format("E | %s | %s | %s | %s", done, e.getDescription(), e.getFrom().toString(), e.getTo().toString());
+        } else {
+            throw new IllegalStateException("Unknown task subclass");
+        }
     }
+
 }
