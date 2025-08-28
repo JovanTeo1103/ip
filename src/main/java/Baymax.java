@@ -1,13 +1,18 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * Main class for Baymax chatbot.
+ * Handles user input and persists tasks using Storage.
+ */
 public class Baymax {
     private static final String HORIZONTAL = "__________________________________";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int taskCount = 0;
-        final ArrayList<Task> list = new ArrayList<>();
+        Storage storage = new Storage();
+        ArrayList<Task> list = storage.load();
+        int taskCount = list.size();
 
         System.out.printf("%s\nHello! I'm Baymax\nWhat can I do for you?\n%s\n",
                 HORIZONTAL, HORIZONTAL);
@@ -15,7 +20,7 @@ public class Baymax {
         while (true) {
             String input = scanner.nextLine();
             try {
-                int result = handleCommand(input, list, taskCount);
+                int result = handleCommand(input, list, taskCount, storage);
                 if (result == -1) break; // bye command detected
                 taskCount = result;
             } catch (InvalidDescriptionException | InvalidCommandException e) {
@@ -26,8 +31,18 @@ public class Baymax {
         }
     }
 
-    // Helper function to handle user commands
-    private static int handleCommand(String input, ArrayList<Task> list, int taskCount) throws InvalidCommandException, InvalidDescriptionException {
+    /**
+     * Handles a single user command.
+     *
+     * @param input the user input
+     * @param list the list of tasks
+     * @param taskCount current number of tasks
+     * @param storage Storage object to persist tasks
+     * @return updated taskCount, or -1 if the user typed "bye"
+     * @throws InvalidCommandException if the command is invalid
+     * @throws InvalidDescriptionException if the task description is invalid
+     */
+    private static int handleCommand(String input, ArrayList<Task> list, int taskCount, Storage storage) throws InvalidCommandException, InvalidDescriptionException {
         String[] parts = input.split(" ");
 
         switch (parts[0]) {
@@ -56,6 +71,7 @@ public class Baymax {
                                 System.out.printf(HORIZONTAL + "\nOK, I've marked this task as not done yet:\n"
                                         + list.get(x - 1) + "\n" + HORIZONTAL + "\n");
                             }
+                            storage.save(list);
                         }
                     } catch (NumberFormatException e) {
                         // ignore invalid number
@@ -66,96 +82,66 @@ public class Baymax {
                 if (parts.length == 1) {
                     throw new InvalidDescriptionException("OHNO!!! The description of a todo cannot be empty T.T");
                 }
-                System.out.println("Got it. I've added this task:");
                 list.add(taskCount, new Todo(input, TaskType.TODO));
                 taskCount++;
+                System.out.println(HORIZONTAL + "\nGot it. I've added this task:");
                 System.out.println(list.get(taskCount - 1));
-                System.out.printf("Now you have %d tasks in the list.\n", taskCount);
-                System.out.println(HORIZONTAL);
+                System.out.printf("Now you have %d tasks in the list.\n%s\n", taskCount, HORIZONTAL);
+                storage.save(list);
             }
             case "deadline" -> {
-                System.out.println(HORIZONTAL);
-                System.out.println("Got it. I've added this task:");
                 int byIndex = -1;
-
-                // Looks for /by string
                 for (int i = 1; i < parts.length; i++) {
                     if (parts[i].equals("/by")) {
                         byIndex = i;
                         break;
                     }
                 }
-
                 if (byIndex == -1 || byIndex == 1) {
                     throw new InvalidDescriptionException("OHNO!!! The description of the deadline is invalid T.T");
                 }
 
-                // Combines words before /by as taskName
                 StringBuilder taskName = new StringBuilder();
-                for (int i = 1; i < byIndex; i++) {
-                    taskName.append(parts[i]).append(" ");
-                }
-
-                // Combines words after /by as by
+                for (int i = 1; i < byIndex; i++) taskName.append(parts[i]).append(" ");
                 StringBuilder by = new StringBuilder();
-                for (int i = byIndex + 1; i < parts.length; i++) {
-                    by.append(parts[i]).append(" ");
-                }
+                for (int i = byIndex + 1; i < parts.length; i++) by.append(parts[i]).append(" ");
 
                 list.add(taskCount, new Deadline(taskName.toString().trim(),
                         TaskType.DEADLINE,
                         by.toString().trim()));
                 taskCount++;
+                System.out.println(HORIZONTAL + "\nGot it. I've added this task:");
                 System.out.println(list.get(taskCount - 1));
-                System.out.printf("Now you have %d tasks in the list.\n", taskCount);
-                System.out.println(HORIZONTAL);
-
+                System.out.printf("Now you have %d tasks in the list.\n%s\n", taskCount, HORIZONTAL);
+                storage.save(list);
             }
             case "event" -> {
-                System.out.println(HORIZONTAL);
-                System.out.println("Got it. I've added this task:");
-
                 int fromIndex = -1;
                 int toIndex = -1;
-
-                // Looks for /from and /to string
                 for (int i = 0; i < parts.length; i++) {
                     if (parts[i].equals("/from")) fromIndex = i;
                     if (parts[i].equals("/to")) toIndex = i;
                 }
-
                 if (fromIndex == -1 || toIndex == -1 || fromIndex >= toIndex || fromIndex == 1) {
                     throw new InvalidDescriptionException("OHNO!!! The description of the event is invalid T.T");
                 }
 
-
-                // Combines words before /from as taskName
                 StringBuilder taskName = new StringBuilder();
-                for (int i = 1; i < fromIndex; i++) {
-                    taskName.append(parts[i]).append(" ");
-                }
-
-                // Combines words between /from and /to as from
+                for (int i = 1; i < fromIndex; i++) taskName.append(parts[i]).append(" ");
                 StringBuilder from = new StringBuilder();
-                for (int i = fromIndex + 1; i < toIndex; i++) {
-                    from.append(parts[i]).append(" ");
-                }
-
-                // Combines words after /to as to
+                for (int i = fromIndex + 1; i < toIndex; i++) from.append(parts[i]).append(" ");
                 StringBuilder to = new StringBuilder();
-                for (int i = toIndex + 1; i < parts.length; i++) {
-                    to.append(parts[i]).append(" ");
-                }
+                for (int i = toIndex + 1; i < parts.length; i++) to.append(parts[i]).append(" ");
 
                 list.add(taskCount, new Event(taskName.toString().trim(),
                         TaskType.EVENT,
                         from.toString().trim(),
                         to.toString().trim()));
                 taskCount++;
+                System.out.println(HORIZONTAL + "\nGot it. I've added this task:");
                 System.out.println(list.get(taskCount - 1));
-                System.out.printf("Now you have %d tasks in the list.\n", taskCount);
-                System.out.println(HORIZONTAL);
-
+                System.out.printf("Now you have %d tasks in the list.\n%s\n", taskCount, HORIZONTAL);
+                storage.save(list);
             }
             case "delete" -> {
                 if (parts.length == 2) {
@@ -166,9 +152,8 @@ public class Baymax {
                             taskCount--;
                             System.out.printf(HORIZONTAL + "\nNoted. I've removed this task:\n");
                             System.out.println(removedTask);
-                            System.out.printf("Now you have %d tasks in the list.\n", taskCount);
-                            System.out.println(HORIZONTAL);
-
+                            System.out.printf("Now you have %d tasks in the list.\n%s\n", taskCount, HORIZONTAL);
+                            storage.save(list);
                         }
                     } catch (NumberFormatException e) {
                         // ignore invalid number
