@@ -1,5 +1,7 @@
 package baymax;
 
+import java.util.ArrayList;
+
 public class Ui {
     private static final String HORIZONTAL = "__________________________________";
 
@@ -58,4 +60,14 @@ public class Ui {
         System.out.println(msg);
         showLine();
     }
+
+    public void showFoundTasks(ArrayList<Task> matches) {
+        showLine();
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < matches.size(); i++) {
+            System.out.printf("%d.%s\n", i + 1, matches.get(i));
+        }
+        showLine();
+    }
+
 }

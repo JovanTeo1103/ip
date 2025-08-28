@@ -1,5 +1,6 @@
 package baymax;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Baymax {
@@ -31,51 +32,56 @@ public class Baymax {
                 String args = Parser.getArgs(input);
 
                 switch (command) {
-                    case "bye" -> {
-                        ui.showBye();
-                        return;
-                    }
-                    case "list" -> ui.showList(tasks);
-                    case "mark" -> {
-                        int idx = Parser.parseIndex(args);
-                        tasks.get(idx).markAsDone();
-                        ui.showTaskMarked(tasks.get(idx));
-                        storage.save(tasks.getAll());
-                    }
-                    case "unmark" -> {
-                        int idx = Parser.parseIndex(args);
-                        tasks.get(idx).markAsUndone();
-                        ui.showTaskUnmarked(tasks.get(idx));
-                        storage.save(tasks.getAll());
-                    }
-                    case "delete" -> {
-                        int idx = Parser.parseIndex(args);
-                        Task removed = tasks.remove(idx);
-                        ui.showTaskRemoved(removed, tasks.size());
-                        storage.save(tasks.getAll());
-                    }
-                    case "todo" -> {
-                        String desc = Parser.parseTodo(args);
-                        Task t = new Todo(desc, TaskType.TODO);
-                        tasks.add(t);
-                        ui.showTaskAdded(t, tasks.size());
-                        storage.save(tasks.getAll());
-                    }
-                    case "deadline" -> {
-                        String[] parts = Parser.parseDeadline(args);
-                        Task t = new Deadline(parts[0], TaskType.DEADLINE, parts[1]);
-                        tasks.add(t);
-                        ui.showTaskAdded(t, tasks.size());
-                        storage.save(tasks.getAll());
-                    }
-                    case "event" -> {
-                        String[] parts = Parser.parseEvent(args);
-                        Task t = new Event(parts[0], TaskType.EVENT, parts[1], parts[2]);
-                        tasks.add(t);
-                        ui.showTaskAdded(t, tasks.size());
-                        storage.save(tasks.getAll());
-                    }
-                    default -> ui.showError("OHNO!!! I'm sorry, but that's not a valid command T.T");
+                case "bye" -> {
+                    ui.showBye();
+                    return;
+                }
+                case "list" -> ui.showList(tasks);
+                case "mark" -> {
+                    int idx = Parser.parseIndex(args);
+                    tasks.get(idx).markAsDone();
+                    ui.showTaskMarked(tasks.get(idx));
+                    storage.save(tasks.getAll());
+                }
+                case "unmark" -> {
+                    int idx = Parser.parseIndex(args);
+                    tasks.get(idx).markAsUndone();
+                    ui.showTaskUnmarked(tasks.get(idx));
+                    storage.save(tasks.getAll());
+                }
+                case "delete" -> {
+                    int idx = Parser.parseIndex(args);
+                    Task removed = tasks.remove(idx);
+                    ui.showTaskRemoved(removed, tasks.size());
+                    storage.save(tasks.getAll());
+                }
+                case "todo" -> {
+                    String desc = Parser.parseTodo(args);
+                    Task t = new Todo(desc, TaskType.TODO);
+                    tasks.add(t);
+                    ui.showTaskAdded(t, tasks.size());
+                    storage.save(tasks.getAll());
+                }
+                case "deadline" -> {
+                    String[] parts = Parser.parseDeadline(args);
+                    Task t = new Deadline(parts[0], TaskType.DEADLINE, parts[1]);
+                    tasks.add(t);
+                    ui.showTaskAdded(t, tasks.size());
+                    storage.save(tasks.getAll());
+                }
+                case "event" -> {
+                    String[] parts = Parser.parseEvent(args);
+                    Task t = new Event(parts[0], TaskType.EVENT, parts[1], parts[2]);
+                    tasks.add(t);
+                    ui.showTaskAdded(t, tasks.size());
+                    storage.save(tasks.getAll());
+                }
+                case "find" -> {
+                    String keyword = input.substring(5).trim();
+                    ArrayList<Task> matches = tasks.findTasks(keyword);
+                    ui.showFoundTasks(matches);
+                }
+                default -> ui.showError("OHNO!!! I'm sorry, but that's not a valid command T.T");
                 }
             } catch (InvalidCommandException | InvalidDescriptionException e) {
                 ui.showError(e.getMessage());
