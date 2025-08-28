@@ -1,13 +1,21 @@
 public class Task {
-    protected String taskName;
+    protected String taskDescripion;
     protected boolean isDone;
     protected TaskType taskType;
 
     public Task(String taskName, TaskType taskType) {
-        this.taskName = taskName;
+        this.taskDescripion = taskName;
         this.isDone = false;
         this.taskType = taskType;
     }
+
+    // Overload Constructor that takes in boolean isDone for file reading
+    public Task(String taskName, TaskType taskType, boolean isDone) {
+        this.taskDescripion = taskName;
+        this.taskType = taskType;
+        this.isDone = isDone;
+    }
+
 
     public void markAsDone() {
         this.isDone = true;
@@ -18,9 +26,17 @@ public class Task {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return isDone
-                ? "[X] " + taskName
-                : "[ ] " + taskName;
+                ? "[X] " + taskDescripion
+                : "[ ] " + taskDescripion;
+    }
+
+    public String getDescription() {
+        return this.taskDescripion;
+    }
+
+    public boolean getStatus() {
+        return this.isDone;
     }
 }
