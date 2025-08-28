@@ -1,9 +1,11 @@
+package baymax;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
 /**
- * Storage class handles reading and writing Task objects to a file.
+ * baymax.Storage class handles reading and writing baymax.Task objects to a file.
  * Tasks are persisted in a text file so that they can be loaded on
  * program start and saved when modified.
  */
@@ -12,7 +14,7 @@ public class Storage {
 
 
     /**
-     * Constructs a Storage object using the default file path.
+     * Constructs a baymax.Storage object using the default file path.
      * The default file path is "./data/baymax.txt".
      */
     public Storage() {
@@ -65,10 +67,10 @@ public class Storage {
 
 
     /**
-     * Parses a line from the storage file and converts it into a Task object.
+     * Parses a line from the storage file and converts it into a baymax.Task object.
      *
      * @param line a single line from the file representing a task
-     * @return a Task object corresponding to the line
+     * @return a baymax.Task object corresponding to the line
      * @throws IllegalArgumentException if the task type is unknown
      */
     private Task parse(String line) {
@@ -87,7 +89,7 @@ public class Storage {
 
 
     /**
-     * Converts a Task object into a string that can be saved in the storage file.
+     * Converts a baymax.Task object into a string that can be saved in the storage file.
      *
      * @param t the task to format
      * @return a string representation of the task for file storage

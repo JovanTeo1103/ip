@@ -1,3 +1,5 @@
+package baymax;
+
 public class Parser {
 
     /** Extracts the command keyword from the raw input */
@@ -23,7 +25,7 @@ public class Parser {
     /** Parses a deadline command into description and by date */
     public static String[] parseDeadline(String args) throws InvalidDescriptionException {
         int byIndex = args.indexOf("/by");
-        if (byIndex == -1) throw new InvalidDescriptionException("OHNO!!! Deadline must have /by");
+        if (byIndex == -1) throw new InvalidDescriptionException("OHNO!!! baymax.Deadline must have /by");
 
         String desc = args.substring(0, byIndex).trim();
         String by = args.substring(byIndex + 3).trim();

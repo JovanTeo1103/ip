@@ -1,8 +1,10 @@
+package baymax;
+
 public class Ui {
     private static final String HORIZONTAL = "__________________________________";
 
     public void showWelcome() {
-        System.out.printf("%s\nHello! I'm Baymax\nWhat can I do for you?\n%s\n",
+        System.out.printf("%s\nHello! I'm baymax.Baymax\nWhat can I do for you?\n%s\n",
                 HORIZONTAL, HORIZONTAL);
     }
 
