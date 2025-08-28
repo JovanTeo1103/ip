@@ -1,6 +1,7 @@
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.time.LocalDate;
 
 /**
  * Storage class handles reading and writing Task objects to a file.
@@ -80,7 +81,7 @@ public class Storage {
         return switch (type) {
             case "T" -> new Todo(desc, TaskType.TODO, isDone);
             case "D" -> new Deadline(desc, TaskType.DEADLINE, parts[3], isDone);
-            case "E" -> new Event(desc, TaskType.EVENT, parts[3], parts.length > 4 ? parts[4] : "", isDone);
+            case "E" -> new Event(desc, TaskType.EVENT, parts[3], parts[4], isDone);
             default -> throw new IllegalArgumentException("Unknown type: " + type);
         };
     }
@@ -96,8 +97,10 @@ public class Storage {
         String done = t.getStatus() ? "1" : "0";
         return switch (t) {
             case Todo td -> String.format("T | %s | %s", done, td.getDescription());
-            case Deadline d -> String.format("D | %s | %s | %s", done, d.getDescription(), d.getBy());
-            case Event e -> String.format("E | %s | %s | %s | %s", done, e.getDescription(), e.getFrom(), e.getTo());
+            case Deadline d -> String.format("D | %s | %s | %s", done, d.getDescription(), d.getBy().toString());
+            case Event e ->
+                    String.format("E | %s | %s | %s | %s", done, e.getDescription(), e.getFrom().toString(), e.getTo().toString());
+
             default -> throw new IllegalStateException("Unknown task subclass");
         };
     }
