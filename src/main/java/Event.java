@@ -1,30 +1,36 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
 
-    protected String from;
-    protected String to;
+    private LocalDate from;
+    private LocalDate to;
 
-    public Event(String taskName, TaskType taskType, String from, String to) {
+    public Event(String taskName, TaskType taskType, String fromStr, String toStr) {
         super(taskName, taskType);
-        this.from = from;
-        this.to = to;
+        this.from = LocalDate.parse(fromStr);
+        this.to = LocalDate.parse(toStr);
     }
 
-    public Event(String taskName, TaskType taskType, String from, String to, boolean isDone) {
+    public Event(String taskName, TaskType taskType, String fromStr, String toStr, boolean isDone) {
         super(taskName, taskType, isDone);
-        this.from = from;
-        this.to = to;
+        this.from = LocalDate.parse(fromStr);
+        this.to = LocalDate.parse(toStr);
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        String fromFormatted = from.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        String toFormatted = to.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        return "[E]" + super.toString() + " (from: " + fromFormatted + " to: " + toFormatted + ")";
     }
 
-    public String getFrom() {
+
+    public LocalDate getFrom() {
         return this.from;
     }
 
-    public String getTo() {
+    public LocalDate getTo() {
         return this.to;
     }
 }
