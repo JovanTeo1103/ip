@@ -8,10 +8,10 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task t = tasks.get(index);
         t.markAsDone();
         storage.save(tasks.getAll());
-        ui.showTaskMarked(t);
+        return ui.showTaskMarked(t);
     }
 }

@@ -8,11 +8,11 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task t = tasks.get(index);
         t.markAsUndone();
         storage.save(tasks.getAll());
-        ui.showTaskUnmarked(t);
+        return ui.showTaskUnmarked(t);
     }
 }
 

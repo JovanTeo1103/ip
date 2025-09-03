@@ -7,6 +7,8 @@ public class Baymax {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
+    private String commandType;
+
 
     public Baymax() {
         ui = new Ui();
@@ -23,18 +25,35 @@ public class Baymax {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        ui.showWelcome();
+        System.out.println(ui.showWelcome());
 
         while (true) {
             String input = scanner.nextLine();
             try {
                 Command cmd = Parser.parse(input);
-                cmd.execute(tasks, ui, storage);
+                String response = cmd.execute(tasks, ui, storage);
+                System.out.println(response);
                 if (cmd.isExit()) break;
             } catch (InvalidCommandException | InvalidDescriptionException e) {
-                ui.showError(e.getMessage());
+                System.out.println(ui.showError(e.getMessage()));
             }
         }
+
+    }
+
+    public String getResponse(String input) {
+        try {
+            Command cmd = Parser.parse(input);
+            String response = cmd.execute(tasks, ui, storage);
+            commandType = cmd.getClass().getSimpleName();
+            return response;
+        } catch (InvalidCommandException | InvalidDescriptionException e) {
+            return ui.showError(e.getMessage());
+        }
+    }
+
+    public String getCommandType() {
+        return commandType;
     }
 
 

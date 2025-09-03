@@ -12,10 +12,10 @@ public class EventCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Event t = new Event(desc, TaskType.EVENT, from, to);
         tasks.add(t);
         storage.save(tasks.getAll());
-        ui.showTaskAdded(t, tasks.size());
+        return ui.showTaskAdded(t, tasks.size());
     }
 }

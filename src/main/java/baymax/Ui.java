@@ -5,69 +5,77 @@ import java.util.ArrayList;
 public class Ui {
     private static final String HORIZONTAL = "__________________________________";
 
-    public void showWelcome() {
-        System.out.printf("%s\nHello! I'm baymax.Baymax\nWhat can I do for you?\n%s\n",
-                HORIZONTAL, HORIZONTAL);
+    public String showWelcome() {
+        return HORIZONTAL + "\n"
+                + "Hello! I'm Baymax\n"
+                + "What can I do for you?\n"
+                + HORIZONTAL;
     }
 
-    public void showLine() {
-        System.out.println(HORIZONTAL);
+    public String showLine() {
+        return HORIZONTAL;
     }
 
-    public void showTaskAdded(Task t, int taskCount) {
-        showLine();
-        System.out.println("Got it. I've added this task:");
-        System.out.println(t);
-        System.out.printf("Now you have %d tasks in the list.\n%s\n", taskCount, HORIZONTAL);
+    public String showTaskAdded(Task t, int taskCount) {
+        return HORIZONTAL + "\n"
+                + "Got it. I've added this task:\n"
+                + t + "\n"
+                + "Now you have " + taskCount + " tasks in the list.\n"
+                + HORIZONTAL;
     }
 
-    public void showTaskRemoved(Task t, int taskCount) {
-        showLine();
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(t);
-        System.out.printf("Now you have %d tasks in the list.\n%s\n", taskCount, HORIZONTAL);
+    public String showTaskRemoved(Task t, int taskCount) {
+        return HORIZONTAL + "\n"
+                + "Noted. I've removed this task:\n"
+                + t + "\n"
+                + "Now you have " + taskCount + " tasks in the list.\n"
+                + HORIZONTAL;
     }
 
-    public void showTaskMarked(Task t) {
-        showLine();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(t);
-        showLine();
+    public String showTaskMarked(Task t) {
+        return HORIZONTAL + "\n"
+                + "Nice! I've marked this task as done:\n"
+                + t + "\n"
+                + HORIZONTAL;
     }
 
-    public void showTaskUnmarked(Task t) {
-        showLine();
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(t);
-        showLine();
+    public String showTaskUnmarked(Task t) {
+        return HORIZONTAL + "\n"
+                + "OK, I've marked this task as not done yet:\n"
+                + t + "\n"
+                + HORIZONTAL;
     }
 
-    public void showList(TaskList tasks) {
-        showLine();
-        System.out.println("Here are the tasks in your list:");
+    public String showList(TaskList tasks) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(HORIZONTAL).append("\n");
+        sb.append("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.printf("%d.%s\n", i + 1, tasks.get(i));
+            sb.append(i + 1).append(".").append(tasks.get(i)).append("\n");
         }
-        showLine();
+        sb.append(HORIZONTAL);
+        return sb.toString();
     }
 
-    public void showBye() {
-        System.out.printf("%s\nBye. Hope to see you again soon!\n", HORIZONTAL);
+    public String showBye() {
+        return HORIZONTAL + "\n"
+                + "Bye. Hope to see you again soon!\n";
     }
 
-    public void showError(String msg) {
-        showLine();
-        System.out.println(msg);
-        showLine();
+    public String showError(String msg) {
+        return HORIZONTAL + "\n"
+                + msg + "\n"
+                + HORIZONTAL;
     }
 
-    public void showFoundTasks(ArrayList<Task> matches) {
-        showLine();
-        System.out.println("Here are the matching tasks in your list:");
+    public String showFoundTasks(ArrayList<Task> matches) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(HORIZONTAL).append("\n");
+        sb.append("Here are the matching tasks in your list:\n");
         for (int i = 0; i < matches.size(); i++) {
-            System.out.printf("%d.%s\n", i + 1, matches.get(i));
+            sb.append(i + 1).append(".").append(matches.get(i)).append("\n");
         }
-        showLine();
+        sb.append(HORIZONTAL);
+        return sb.toString();
     }
-
 }
