@@ -2,6 +2,30 @@ package baymax;
 
 public class Parser {
 
+    public static Command parse(String input) throws InvalidCommandException, InvalidDescriptionException {
+        String command = getCommand(input);
+        String args = getArgs(input);
+
+        return switch (command) {
+            case "bye" -> new ByeCommand();
+            case "list" -> new ListCommand();
+            case "mark" -> new MarkCommand(parseIndex(args));
+            case "unmark" -> new UnmarkCommand(parseIndex(args));
+            case "delete" -> new DeleteCommand(parseIndex(args));
+            case "todo" -> new TodoCommand(parseTodo(args));
+            case "deadline" -> {
+                String[] parts = parseDeadline(args);
+                yield new DeadlineCommand(parts[0], parts[1]);
+            }
+            case "event" -> {
+                String[] parts = parseEvent(args);
+                yield new EventCommand(parts[0], parts[1], parts[2]);
+            }
+            case "find" -> new FindCommand(args.trim());
+            default -> throw new InvalidCommandException("Unknown command: " + command);
+        };
+    }
+
     /** Extracts the command keyword from the raw input */
     public static String getCommand(String input) {
         String[] parts = input.trim().split(" ", 2);
