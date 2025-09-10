@@ -6,6 +6,8 @@ import exception.BaymaxException;
 public class Parser {
 
     public static Command parse(String input) throws BaymaxException {
+        assert input != null : "Input should never be null";
+
         String command = getCommand(input);
         String args = getArgs(input);
 
@@ -31,18 +33,21 @@ public class Parser {
 
     /** Extracts the command keyword from the raw input */
     public static String getCommand(String input) {
+        assert input != null : "Input should never be null";
         String[] parts = input.trim().split(" ", 2);
         return parts[0];
     }
 
     /** Extracts everything after the command as arguments */
     public static String getArgs(String input) {
+        assert input != null : "Input should never be null";
         String[] parts = input.trim().split(" ", 2);
         return parts.length > 1 ? parts[1] : "";
     }
 
     /** Parses a todo command */
     public static String parseTodo(String args) throws BaymaxException {
+        assert args != null : "Input should never be null";
         if (args.isEmpty()) {
             throw new BaymaxException("The description of a todo cannot be empty T.T");
         }
@@ -51,6 +56,8 @@ public class Parser {
 
     /** Parses a deadline command into description and by date */
     public static String[] parseDeadline(String args) throws BaymaxException {
+        assert args != null : "Args should not be null";
+
         int byIndex = args.indexOf("/by");
         if (byIndex == -1) throw new BaymaxException("task.Deadline must have /by");
 
@@ -65,6 +72,8 @@ public class Parser {
 
     /** Parses an event command into description, from, and to */
     public static String[] parseEvent(String args) throws BaymaxException {
+        assert args != null : "Args should not be null";
+
         int fromIndex = args.indexOf("/from");
         int toIndex = args.indexOf("/to");
 
@@ -83,6 +92,8 @@ public class Parser {
 
     /** Parses index from mark/unmark/delete commands */
     public static int parseIndex(String arg) throws BaymaxException {
+        assert arg != null : "Arg should not be null";
+
         try {
             return Integer.parseInt(arg.trim()) - 1;
         } catch (NumberFormatException e) {
