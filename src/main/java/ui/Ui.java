@@ -55,34 +55,6 @@ public class Ui {
         return formatMessage("OK, I've marked this task as not done yet:", t, null);
     }
 
-    public String showTaskRemoved(Task t, int taskCount) {
-        assert t != null : "Task should never be null";
-
-        return HORIZONTAL + "\n"
-                + "Noted. I've removed this task:\n"
-                + t + "\n"
-                + "Now you have " + taskCount + " tasks in the list.\n"
-                + HORIZONTAL;
-    }
-
-    public String showTaskMarked(Task t) {
-        assert t != null : "Task should never be null";
-
-        return HORIZONTAL + "\n"
-                + "Nice! I've marked this task as done:\n"
-                + t + "\n"
-                + HORIZONTAL;
-    }
-
-    public String showTaskUnmarked(Task t) {
-        assert t != null : "Task should never be null";
-
-        return HORIZONTAL + "\n"
-                + "OK, I've marked this task as not done yet:\n"
-                + t + "\n"
-                + HORIZONTAL;
-    }
-
     public String showList(TaskList tasks) {
         assert tasks != null : "TaskList should never be null";
 
@@ -107,8 +79,8 @@ public class Ui {
                 + HORIZONTAL;
     }
 
-    public String showFoundTasks(ArrayList<Task> matches) {
-        assert matches != null : "Matches list should never be null";
+    public String showFoundTasks(ArrayList<Task> tasks) {
+        assert tasks != null : "Tasks list should never be null";
         StringBuilder sb = new StringBuilder();
         sb.append(HORIZONTAL).append("\n");
         sb.append("Here are the matching tasks in your list:\n");
