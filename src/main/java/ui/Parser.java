@@ -1,8 +1,11 @@
-package baymax;
+package ui;
+
+import command.*;
+import exception.BaymaxException;
 
 public class Parser {
 
-    public static Command parse(String input) throws InvalidCommandException, InvalidDescriptionException {
+    public static Command parse(String input) throws BaymaxException {
         String command = getCommand(input);
         String args = getArgs(input);
 
@@ -22,7 +25,7 @@ public class Parser {
                 yield new EventCommand(parts[0], parts[1], parts[2]);
             }
             case "find" -> new FindCommand(args.trim());
-            default -> throw new InvalidCommandException("Unknown command: " + command);
+            default -> throw new BaymaxException("Unknown command: " + command);
         };
     }
 
@@ -39,51 +42,51 @@ public class Parser {
     }
 
     /** Parses a todo command */
-    public static String parseTodo(String args) throws InvalidDescriptionException {
+    public static String parseTodo(String args) throws BaymaxException {
         if (args.isEmpty()) {
-            throw new InvalidDescriptionException("OHNO!!! The description of a todo cannot be empty T.T");
+            throw new BaymaxException("The description of a todo cannot be empty T.T");
         }
         return args;
     }
 
     /** Parses a deadline command into description and by date */
-    public static String[] parseDeadline(String args) throws InvalidDescriptionException {
+    public static String[] parseDeadline(String args) throws BaymaxException {
         int byIndex = args.indexOf("/by");
-        if (byIndex == -1) throw new InvalidDescriptionException("OHNO!!! baymax.Deadline must have /by");
+        if (byIndex == -1) throw new BaymaxException("task.Deadline must have /by");
 
         String desc = args.substring(0, byIndex).trim();
         String by = args.substring(byIndex + 3).trim();
 
         if (desc.isEmpty() || by.isEmpty())
-            throw new InvalidDescriptionException("OHNO!!! The description of the deadline is invalid T.T");
+            throw new BaymaxException("The description of the deadline is invalid T.T");
 
         return new String[]{desc, by};
     }
 
     /** Parses an event command into description, from, and to */
-    public static String[] parseEvent(String args) throws InvalidDescriptionException {
+    public static String[] parseEvent(String args) throws BaymaxException {
         int fromIndex = args.indexOf("/from");
         int toIndex = args.indexOf("/to");
 
         if (fromIndex == -1 || toIndex == -1 || fromIndex >= toIndex)
-            throw new InvalidDescriptionException("OHNO!!! The description of the event is invalid T.T");
+            throw new BaymaxException("The description of the event is invalid T.T");
 
         String desc = args.substring(0, fromIndex).trim();
         String from = args.substring(fromIndex + 5, toIndex).trim();
         String to = args.substring(toIndex + 3).trim();
 
         if (desc.isEmpty() || from.isEmpty() || to.isEmpty())
-            throw new InvalidDescriptionException("OHNO!!! The description of the event is invalid T.T");
+            throw new BaymaxException("The description of the event is invalid T.T");
 
         return new String[]{desc, from, to};
     }
 
     /** Parses index from mark/unmark/delete commands */
-    public static int parseIndex(String arg) throws InvalidCommandException {
+    public static int parseIndex(String arg) throws BaymaxException {
         try {
             return Integer.parseInt(arg.trim()) - 1;
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Invalid number format");
+            throw new BaymaxException("Please specify a task number T.T");
         }
     }
 }

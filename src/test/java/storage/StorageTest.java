@@ -1,4 +1,4 @@
-package baymax;
+package storage;
 
 import org.junit.jupiter.api.*;
 import java.io.IOException;
@@ -7,8 +7,11 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import storage.Storage;
+import task.*;
+
 /**
- * JUnit tests for the baymax.Storage class.
+ * JUnit tests for the storage.Storage class.
  *
  * Tests saving and loading tasks to ensure persistence works correctly.
  */

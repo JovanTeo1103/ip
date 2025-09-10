@@ -1,4 +1,4 @@
-package baymax;
+package task;
 
 public enum TaskType {
     TODO,

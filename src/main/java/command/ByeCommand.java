@@ -1,4 +1,8 @@
-package baymax;
+package command;
+
+import storage.Storage;
+import task.TaskList;
+import ui.Ui;
 
 public class ByeCommand extends Command {
     @Override

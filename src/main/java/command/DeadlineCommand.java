@@ -1,4 +1,10 @@
-package baymax;
+package command;
+
+import storage.Storage;
+import task.Deadline;
+import task.TaskList;
+import task.TaskType;
+import ui.Ui;
 
 // Add a deadline
 public class DeadlineCommand extends Command {

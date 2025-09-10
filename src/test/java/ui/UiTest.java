@@ -1,12 +1,14 @@
-package baymax;
+package ui;
 
 import org.junit.jupiter.api.*;
 import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import task.*;
+
 /**
- * JUnit tests for the baymax.Ui class.
+ * JUnit tests for the ui.Ui class.
  * Tests the behavior of methods that format and display task information.
  * ensuring the correct output is printed to System.out.
  */

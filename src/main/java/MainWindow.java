@@ -1,5 +1,5 @@
-package baymax;
-
+import baymax.Baymax;
+import exception.BaymaxException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 /**
  * Controller for the main GUI.
  */
@@ -27,12 +28,16 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     public void initialize() {
+
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /**
+     * Injects the Duke instance
+     */
     public void setBaymax(Baymax d) {
         baymax = d;
+        showWelcome();
     }
 
     /**
@@ -40,15 +45,31 @@ public class MainWindow extends AnchorPane {
      * the dialog container. Clears the user input after processing.
      */
     @FXML
-    private void handleUserInput() {
-        String input = userInput.getText();
-        String response = baymax.getResponse(input);
-        String commandType = baymax.getCommandType();
+    private void handleUserInput() throws BaymaxException {
+        String input = userInput.getText().trim();
 
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getBaymaxDialog(response, baymaxImage, commandType)
+        try {
+            if (input.isEmpty()) {
+                throw new BaymaxException("Please type something!");
+            }
+            String response = baymax.getResponse(input);
+            String commandType = baymax.getCommandType();
+
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getBaymaxDialog(response, baymaxImage, commandType)
+            );
+        } catch (BaymaxException e) {
+            dialogContainer.getChildren().add(
+                    DialogBox.getBaymaxDialog(e.getMessage(), baymaxImage, ""));
+        } finally {
+            userInput.clear();
+        }
+    }
+
+    private void showWelcome() {
+        dialogContainer.getChildren().add(
+                DialogBox.getBaymaxDialog(baymax.getUi().showWelcome(), baymaxImage, "")
         );
-        userInput.clear();
     }
 }

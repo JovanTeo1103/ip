@@ -1,9 +1,12 @@
-package baymax;
+package ui;
 
 import java.util.ArrayList;
 
+import task.Task;
+import task.TaskList;
+
 public class Ui {
-    private static final String HORIZONTAL = "__________________________________";
+    private static final String HORIZONTAL = "___________________________________________________";
 
     public String showWelcome() {
         return HORIZONTAL + "\n"

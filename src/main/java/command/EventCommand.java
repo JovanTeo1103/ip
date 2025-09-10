@@ -1,4 +1,10 @@
-package baymax;
+package command;
+
+import storage.Storage;
+import task.Event;
+import task.TaskList;
+import task.TaskType;
+import ui.Ui;
 
 public class EventCommand extends Command {
     private final String desc;

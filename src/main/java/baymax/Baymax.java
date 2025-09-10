@@ -1,7 +1,15 @@
 package baymax;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import command.Command;
+import exception.BaymaxException;
+import javafx.application.Platform;
+import storage.Storage;
+import task.TaskList;
+import ui.Parser;
+import ui.Ui;
+
 
 public class Baymax {
     private final Storage storage;
@@ -34,7 +42,7 @@ public class Baymax {
                 String response = cmd.execute(tasks, ui, storage);
                 System.out.println(response);
                 if (cmd.isExit()) break;
-            } catch (InvalidCommandException | InvalidDescriptionException e) {
+            } catch (BaymaxException e) {
                 System.out.println(ui.showError(e.getMessage()));
             }
         }
@@ -46,10 +54,18 @@ public class Baymax {
             Command cmd = Parser.parse(input);
             String response = cmd.execute(tasks, ui, storage);
             commandType = cmd.getClass().getSimpleName();
+            if (cmd.isExit()) {
+                Platform.exit();
+            }
             return response;
-        } catch (InvalidCommandException | InvalidDescriptionException e) {
+        } catch (BaymaxException e) {
+            commandType = "";
             return ui.showError(e.getMessage());
         }
+    }
+
+    public Ui getUi() {
+        return ui;
     }
 
     public String getCommandType() {

@@ -1,5 +1,3 @@
-package baymax;
-
 import javafx.application.Application;
 
 /**

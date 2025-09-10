@@ -1,5 +1,3 @@
-package baymax;
-
 import java.io.IOException;
 import java.util.Collections;
 
@@ -85,6 +83,7 @@ public class DialogBox extends HBox {
             dialog.getStyleClass().add("bye-label");
             break;
         default:
+            dialog.getStyleClass().add("error-label");
             break;
         }
     }

@@ -1,4 +1,4 @@
-package baymax;
+package task;
 
 /**
  * Represents a Todo task in the Baymax application.

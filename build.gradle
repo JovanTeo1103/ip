@@ -44,7 +44,7 @@ test {
 }
 
 application {
-    mainClass.set("baymax.Launcher")
+    mainClass.set("Launcher")
 }
 
 shadowJar {
