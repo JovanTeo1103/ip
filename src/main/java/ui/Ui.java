@@ -20,6 +20,8 @@ public class Ui {
     }
 
     public String showTaskAdded(Task t, int taskCount) {
+        assert t != null : "Task should never be null";
+
         return HORIZONTAL + "\n"
                 + "Got it. I've added this task:\n"
                 + t + "\n"
@@ -28,6 +30,8 @@ public class Ui {
     }
 
     public String showTaskRemoved(Task t, int taskCount) {
+        assert t != null : "Task should never be null";
+
         return HORIZONTAL + "\n"
                 + "Noted. I've removed this task:\n"
                 + t + "\n"
@@ -36,6 +40,8 @@ public class Ui {
     }
 
     public String showTaskMarked(Task t) {
+        assert t != null : "Task should never be null";
+
         return HORIZONTAL + "\n"
                 + "Nice! I've marked this task as done:\n"
                 + t + "\n"
@@ -43,6 +49,8 @@ public class Ui {
     }
 
     public String showTaskUnmarked(Task t) {
+        assert t != null : "Task should never be null";
+
         return HORIZONTAL + "\n"
                 + "OK, I've marked this task as not done yet:\n"
                 + t + "\n"
@@ -50,6 +58,8 @@ public class Ui {
     }
 
     public String showList(TaskList tasks) {
+        assert tasks != null : "TaskList should never be null";
+
         StringBuilder sb = new StringBuilder();
         sb.append(HORIZONTAL).append("\n");
         sb.append("Here are the tasks in your list:\n");
@@ -72,6 +82,8 @@ public class Ui {
     }
 
     public String showFoundTasks(ArrayList<Task> matches) {
+        assert matches != null : "Matches list should never be null";
+
         StringBuilder sb = new StringBuilder();
         sb.append(HORIZONTAL).append("\n");
         sb.append("Here are the matching tasks in your list:\n");
