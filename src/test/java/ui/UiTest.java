@@ -5,6 +5,7 @@ import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import exception.BaymaxException;
 import task.*;
 
 /**
@@ -56,8 +57,10 @@ class UiTest {
     @Test
     void testShowList() {
         TaskList tasks = new TaskList();
-        tasks.add(new Todo("First task", TaskType.TODO));
-        tasks.add(new Deadline("Second task", TaskType.DEADLINE, "2025-08-30"));
+        try {
+            tasks.add(new Todo("First task", TaskType.TODO));
+            tasks.add(new Deadline("Second task", TaskType.DEADLINE, "2025-08-30"));
+        } catch (BaymaxException e) {}
 
         ui.showList(tasks);
 

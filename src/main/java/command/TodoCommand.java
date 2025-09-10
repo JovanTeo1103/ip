@@ -1,6 +1,7 @@
 package command;
 
 
+import exception.BaymaxException;
 import storage.Storage;
 import task.TaskList;
 import task.TaskType;
@@ -16,9 +17,13 @@ public class TodoCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        Todo t = new Todo(desc, TaskType.TODO);
-        tasks.add(t);
-        storage.save(tasks.getAll());
-        return ui.showTaskAdded(t, tasks.size());
+        try {
+            Todo t = new Todo(desc, TaskType.TODO);
+            tasks.add(t);
+            storage.save(tasks.getAll());
+            return ui.showTaskAdded(t, tasks.size());
+        } catch (BaymaxException e) {
+            return ui.showError(e.getMessage());
+        }
     }
 }

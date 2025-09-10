@@ -10,7 +10,7 @@ public class Task {
     /**
      * Description of the task
      */
-    protected String taskDescripion;
+    protected String taskDescription;
 
     /**
      * Completion status of the task
@@ -30,7 +30,7 @@ public class Task {
      * @param taskType the type of the task
      */
     public Task(String taskName, TaskType taskType) {
-        this.taskDescripion = taskName;
+        this.taskDescription = taskName;
         this.isDone = false;
         this.taskType = taskType;
     }
@@ -44,7 +44,7 @@ public class Task {
      * @param isDone   whether the task is completed
      */
     public Task(String taskName, TaskType taskType, boolean isDone) {
-        this.taskDescripion = taskName;
+        this.taskDescription = taskName;
         this.taskType = taskType;
         this.isDone = isDone;
     }
@@ -71,8 +71,8 @@ public class Task {
     @Override
     public String toString() {
         return isDone
-                ? "[X] " + taskDescripion
-                : "[ ] " + taskDescripion;
+                ? "[X] " + taskDescription
+                : "[ ] " + taskDescription;
     }
 
     /**
@@ -81,7 +81,7 @@ public class Task {
      * @return task description
      */
     public String getDescription() {
-        return this.taskDescripion;
+        return this.taskDescription;
     }
 
     /**
@@ -91,6 +91,22 @@ public class Task {
      */
     public boolean getStatus() {
         return this.isDone;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Task)) {
+            return false;
+        }
+
+        Task other = (Task) obj;
+
+        return this.taskDescription.equals(other.taskDescription)
+                && this.taskType == other.taskType;
     }
 }
 

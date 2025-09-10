@@ -2,6 +2,8 @@ package task;
 
 import java.util.ArrayList;
 
+import exception.BaymaxException;
+
 public class TaskList {
     private final ArrayList<Task> tasks;
 
@@ -13,7 +15,10 @@ public class TaskList {
         this.tasks = tasks;
     }
 
-    public void add(Task t) {
+    public void add(Task t) throws BaymaxException {
+        if (tasks.contains(t)) {
+            throw new BaymaxException("This task already exists!");
+        }
         tasks.add(t);
     }
 

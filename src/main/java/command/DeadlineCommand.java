@@ -1,5 +1,6 @@
 package command;
 
+import exception.BaymaxException;
 import storage.Storage;
 import task.Deadline;
 import task.TaskList;
@@ -18,9 +19,13 @@ public class DeadlineCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        Deadline t = new Deadline(desc, TaskType.DEADLINE, by);
-        tasks.add(t);
-        storage.save(tasks.getAll());
-        return ui.showTaskAdded(t, tasks.size());
+        try {
+            Deadline t = new Deadline(desc, TaskType.DEADLINE, by);
+            tasks.add(t);
+            storage.save(tasks.getAll());
+            return ui.showTaskAdded(t, tasks.size());
+        } catch (BaymaxException e) {
+            return ui.showError(e.getMessage());
+        }
     }
 }
