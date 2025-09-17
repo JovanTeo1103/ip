@@ -1,7 +1,7 @@
 # A-AiAssisted Increment
 
 ## Tools Used
-- **ChatGPT (GPT-5)** – Assisted in refining and improving JavaDocs, making code comments clearer, and suggesting minor code readability improvements.
+- **ChatGPT (GPT-5)** – Assisted in creating the project README/User Guide, refining code documentation, and improving overall clarity.
 
 ## How AI Helped
 - Refined existing **JavaDocs** to be more descriptive and consistent across all classes.
