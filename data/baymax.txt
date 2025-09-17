@@ -1,6 +1,5 @@
 T | 0 | study 2040
 T | 1 | study 1521
 T | 1 | study 2030
-T | 0 | study 1101
-D | 0 | Submit report | 2025-09-20
-E | 0 | Project meeting | 2025-09-20 | 2025-09-22
+D | 0 | return book | 2019-12-02
+E | 0 | return book | 2019-12-02 | 2019-12-02

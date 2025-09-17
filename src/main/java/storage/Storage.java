@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+import exception.BaymaxException;
+
 import task.*;
 
 /**
@@ -51,8 +53,9 @@ public class Storage {
             List<String> lines = Files.readAllLines(filePath);
             for (String line : lines) {
                 try {
-                    tasks.add(parse(line));
-                } catch (Exception e) {
+                    Task task = parse(line);
+                    if (task != null) tasks.add(task);
+                } catch (BaymaxException e) {
                     System.err.println("Skipping corrupted line: " + line);
                 }
             }
@@ -87,18 +90,26 @@ public class Storage {
      * @return a task.Task object corresponding to the line
      * @throws IllegalArgumentException if the task type is unknown
      */
-    private Task parse(String line) {
+    private Task parse(String line) throws BaymaxException {
         String[] parts = line.split("\\s*\\|\\s*");
+        if (parts.length < 3) throw new BaymaxException("Corrupted line: " + line);
+
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String desc = parts[2];
 
-        return switch (type) {
-            case "T" -> new Todo(desc, TaskType.TODO, isDone);
-            case "D" -> new Deadline(desc, TaskType.DEADLINE, parts[3], isDone);
-            case "E" -> new Event(desc, TaskType.EVENT, parts[3], parts[4], isDone);
-            default -> throw new IllegalArgumentException("Unknown type: " + type);
-        };
+        switch (type) {
+        case "T":
+            return new Todo(desc, TaskType.TODO, isDone);
+        case "D":
+            if (parts.length < 4) throw new BaymaxException("Deadline missing date: " + line);
+            return new Deadline(desc, TaskType.DEADLINE, parts[3], isDone);
+        case "E":
+            if (parts.length < 5) throw new BaymaxException("Event missing dates: " + line);
+            return new Event(desc, TaskType.EVENT, parts[3], parts[4], isDone);
+        default:
+            throw new BaymaxException("Unknown task type: " + type);
+        }
     }
 
 

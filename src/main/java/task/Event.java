@@ -2,6 +2,8 @@ package task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import exception.BaymaxException;
 
 /**
  * Represents an event-type task in the Baymax task management system.
@@ -11,6 +13,9 @@ import java.time.format.DateTimeFormatter;
  * <p>
  * This class extends {@link Task} and provides functionality to
  * retrieve the start and end dates and display the task in a human-readable format.
+ * <p>
+ * The dates must be entered in the format "d/M/yyyy" (e.g., "2/12/2019").
+ * If the dates are invalid or the start date is after the end date, a {@link BaymaxException} is thrown.
  */
 public class Event extends Task {
 
@@ -22,13 +27,24 @@ public class Event extends Task {
      *
      * @param taskName the description of the task
      * @param taskType the type of the task (should be TaskType.EVENT)
-     * @param fromStr  the start date as a string in ISO_LOCAL_DATE format (yyyy-MM-dd)
-     * @param toStr    the end date as a string in ISO_LOCAL_DATE format (yyyy-MM-dd)
+     * @param fromStr  the start date as a string in "d/M/yyyy" format
+     * @param toStr    the end date as a string in "d/M/yyyy" format
+     * @throws BaymaxException if the date format is invalid or start date is after end date
      */
-    public Event(String taskName, TaskType taskType, String fromStr, String toStr) {
+    public Event(String taskName, TaskType taskType, String fromStr, String toStr) throws BaymaxException {
         super(taskName, taskType);
-        this.from = LocalDate.parse(fromStr);
-        this.to = LocalDate.parse(toStr);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+
+        try {
+            this.from = LocalDate.parse(fromStr.split(" ")[0], formatter);
+            this.to = LocalDate.parse(toStr.split(" ")[0], formatter);
+        } catch (DateTimeParseException e) {
+            throw new BaymaxException("I'm confused... Invalid date format! Please use dd/MM/yyyy, e.g., 2/12/2019");
+        }
+
+        if (this.from.isAfter(this.to)) {
+            throw new BaymaxException("I'm confused... Start date cannot be after end date!");
+        }
     }
 
     /**
@@ -36,14 +52,25 @@ public class Event extends Task {
      *
      * @param taskName the description of the task
      * @param taskType the type of the task (should be TaskType.EVENT)
-     * @param fromStr  the start date as a string in ISO_LOCAL_DATE format (yyyy-MM-dd)
-     * @param toStr    the end date as a string in ISO_LOCAL_DATE format (yyyy-MM-dd)
+     * @param fromStr  the start date as a string in "d/M/yyyy" format
+     * @param toStr    the end date as a string in "d/M/yyyy" format
      * @param isDone   the completion status of the task
+     * @throws BaymaxException if the date format is invalid or start date is after end date
      */
-    public Event(String taskName, TaskType taskType, String fromStr, String toStr, boolean isDone) {
+    public Event(String taskName, TaskType taskType, String fromStr, String toStr, boolean isDone) throws BaymaxException {
         super(taskName, taskType, isDone);
-        this.from = LocalDate.parse(fromStr);
-        this.to = LocalDate.parse(toStr);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+
+        try {
+            this.from = LocalDate.parse(fromStr.split(" ")[0], formatter); // ignore time if present
+            this.to = LocalDate.parse(toStr.split(" ")[0], formatter);     // ignore time if present
+        } catch (DateTimeParseException e) {
+            throw new BaymaxException("I'm confused... Invalid date format! Please use dd/MM/yyyy, e.g., 2/12/2019");
+        }
+
+        if (this.from.isAfter(this.to)) {
+            throw new BaymaxException("I'm confused... Start date cannot be after end date!");
+        }
     }
 
     /**

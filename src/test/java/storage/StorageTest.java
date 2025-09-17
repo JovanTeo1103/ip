@@ -4,6 +4,8 @@ import org.junit.jupiter.api.*;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
+import exception.BaymaxException;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +36,7 @@ class StorageTest {
     }
 
     @Test
-    void saveAndLoadTasks() {
+    void saveAndLoadTasks() throws BaymaxException {
         ArrayList<Task> tasksToSave = new ArrayList<>();
         tasksToSave.add(new Todo("Test todo", TaskType.TODO));
         tasksToSave.add(new Deadline("Test deadline", TaskType.DEADLINE, "2025-08-30"));

@@ -2,6 +2,8 @@ package task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import exception.BaymaxException;
 
 /**
  * Represents a deadline-type task in the Baymax task management system.
@@ -21,9 +23,15 @@ public class Deadline extends Task {
      * @param taskType the type of the task (should be TaskType.DEADLINE)
      * @param byStr    the due date as a string in ISO_LOCAL_DATE format (yyyy-MM-dd)
      */
-    public Deadline(String taskName, TaskType taskType, String byStr) {
+    public Deadline(String taskName, TaskType taskType, String byStr) throws BaymaxException{
         super(taskName, taskType);
-        this.by = LocalDate.parse(byStr);
+        try {
+            // Accepts dd/MM/yyyy format
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+            this.by = LocalDate.parse(byStr.split(" ")[0], formatter); // ignore time if present
+        } catch (DateTimeParseException e) {
+            throw new BaymaxException("I'm confused... invalid date format! Please use dd/MM/yyyy, e.g., 2/12/2019");
+        }
     }
 
     /**
@@ -34,9 +42,14 @@ public class Deadline extends Task {
      * @param byStr    the due date as a string in ISO_LOCAL_DATE format (yyyy-MM-dd)
      * @param isDone   the completion status of the task
      */
-    public Deadline(String taskName, TaskType taskType, String byStr, boolean isDone) {
+    public Deadline(String taskName, TaskType taskType, String byStr, boolean isDone) throws BaymaxException {
         super(taskName, taskType, isDone);
-        this.by = LocalDate.parse(byStr);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+            this.by = LocalDate.parse(byStr.split(" ")[0], formatter); // ignore time if present
+        } catch (DateTimeParseException e) {
+            throw new BaymaxException("I'm confused... invalid date format! Please use dd/MM/yyyy, e.g., 2/12/2019");
+        }
     }
 
     /**
