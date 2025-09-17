@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatter;
  * retrieve the due date and display the task in a human-readable format.
  */
 public class Deadline extends Task {
-
     private LocalDate by;
 
     /**

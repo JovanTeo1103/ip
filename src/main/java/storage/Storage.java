@@ -62,6 +62,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the given list of tasks to the storage file.
+     *
+     * @param tasks the list of tasks to save
+     */
     public void save(List<Task> tasks) {
         try {
             Files.createDirectories(filePath.getParent());
@@ -74,7 +79,6 @@ public class Storage {
             System.err.println("Could not save tasks: " + e.getMessage());
         }
     }
-
 
     /**
      * Parses a line from the storage file and converts it into a task.Task object.

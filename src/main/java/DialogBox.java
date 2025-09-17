@@ -13,8 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 /**
- * Represents a dialog box consisting of an ImageView to represent the speaker's face
- * and a label containing text from the speaker.
+ * Represents a dialog box in the GUI, consisting of a text label and an image.
+ * <p>
+ * This class is used for both the user and Baymax (chatbot) dialogs.
+ * The style and alignment can be customized depending on the type of command.
  */
 public class DialogBox extends HBox {
     @FXML
@@ -22,6 +24,14 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+
+    /**
+     * Constructs a DialogBox with the given text and image.
+     * Loads the FXML layout and initializes the components.
+     *
+     * @param text the text content of the dialog
+     * @param img  the image representing the speaker
+     */
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
@@ -37,7 +47,8 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Flips the dialog box such that the ImageView is on the left and text on the right.
+     * Flips the dialog box so that the image is on the left and text is on the right.
+     * This is used for Baymax's dialog to differentiate from the user's dialog.
      */
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
@@ -47,10 +58,26 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
+    /**
+     * Creates a DialogBox for the user with the specified text and image.
+     *
+     * @param text the user's message
+     * @param img  the user's avatar image
+     * @return a DialogBox representing the user message
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Creates a DialogBox for Baymax (chatbot) with the specified text, image, and command type.
+     * The dialog is flipped and styled according to the command type.
+     *
+     * @param text        the chatbot's message
+     * @param img         the chatbot's avatar image
+     * @param commandType the type of command (used to style the message)
+     * @return a DialogBox representing the Baymax message
+     */
     public static DialogBox getBaymaxDialog(String text, Image img, String commandType) {
         var db = new DialogBox(text, img);
         db.flip();
@@ -59,6 +86,11 @@ public class DialogBox extends HBox {
     }
 
 
+    /**
+     * Changes the visual style of the dialog text based on the command type.
+     *
+     * @param commandType the type of command that produced this dialog
+     */
     private void changeDialogStyle(String commandType) {
         switch (commandType) {
         case "TodoCommand":

@@ -9,7 +9,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 /**
- * Controller for the main GUI.
+ * Controller class for the main GUI window of the Baymax application.
+ * <p>
+ * Manages user input, dialog display, and interaction with the Baymax logic.
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -21,11 +23,21 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
+    /**
+     * The Baymax instance providing the backend logic
+     */
     private Baymax baymax;
 
+    /**
+     * Images for user and Baymax avatars
+     */
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image baymaxImage = new Image(this.getClass().getResourceAsStream("/images/DaBaymax.png"));
 
+    /**
+     * Initializes the controller after the FXML elements are loaded.
+     * Sets the scrollPane to follow the height of the dialog container.
+     */
     @FXML
     public void initialize() {
 
@@ -33,7 +45,9 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Injects the Duke instance
+     * Injects the Baymax instance into the controller and shows the welcome message.
+     *
+     * @param d the Baymax instance
      */
     public void setBaymax(Baymax d) {
         baymax = d;
@@ -41,8 +55,10 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Handles the user's input: creates dialog boxes for user input and Baymax's response,
+     * then appends them to the dialog container. Clears the user input field afterward.
+     *
+     * @throws BaymaxException if user input is invalid
      */
     @FXML
     private void handleUserInput() throws BaymaxException {
@@ -67,6 +83,9 @@ public class MainWindow extends AnchorPane {
         }
     }
 
+    /**
+     * Shows the welcome message from Baymax at application startup.
+     */
     private void showWelcome() {
         dialogContainer.getChildren().add(
                 DialogBox.getBaymaxDialog(baymax.getUi().showWelcome(), baymaxImage, "")

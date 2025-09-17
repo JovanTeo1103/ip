@@ -2,8 +2,10 @@ package task;
 
 /**
  * Represents a generic task in the Baymax application.
+ * <p>
  * A Task has a description, a completion status, and a type.
- * This class serves as the superclass for more specific task types such as {@link Todo}, {@link Deadline}, and {@link Event}.
+ * This class serves as the superclass for more specific task types such as
+ * {@link Todo}, {@link Deadline}, and {@link Event}.
  */
 public class Task {
 
@@ -93,6 +95,14 @@ public class Task {
         return this.isDone;
     }
 
+
+    /**
+     * Compares this task with another object for equality.
+     * Two tasks are equal if they have the same description and type.
+     *
+     * @param obj the object to compare with
+     * @return true if the tasks are equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

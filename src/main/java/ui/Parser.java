@@ -3,8 +3,19 @@ package ui;
 import command.*;
 import exception.BaymaxException;
 
+/**
+ * The Parser class is responsible for converting user input strings
+ * into executable {@link Command} objects for the Baymax application.
+ */
 public class Parser {
 
+    /**
+     * Parses a raw input string into a corresponding {@link Command}.
+     *
+     * @param input the raw input from the user
+     * @return a Command object corresponding to the input
+     * @throws BaymaxException if the input is invalid or the command is unknown
+     */
     public static Command parse(String input) throws BaymaxException {
         assert input != null : "Input should never be null";
 
@@ -31,21 +42,27 @@ public class Parser {
         };
     }
 
-    /** Extracts the command keyword from the raw input */
+    /**
+     * Extracts the command keyword from the raw input
+     */
     public static String getCommand(String input) {
         assert input != null : "Input should never be null";
         String[] parts = input.trim().split(" ", 2);
         return parts[0];
     }
 
-    /** Extracts everything after the command as arguments */
+    /**
+     * Extracts everything after the command as arguments
+     */
     public static String getArgs(String input) {
         assert input != null : "Input should never be null";
         String[] parts = input.trim().split(" ", 2);
         return parts.length > 1 ? parts[1] : "";
     }
 
-    /** Parses a todo command */
+    /**
+     * Parses a todo command
+     */
     public static String parseTodo(String args) throws BaymaxException {
         assert args != null : "Input should never be null";
         if (args.isEmpty()) {
@@ -54,7 +71,9 @@ public class Parser {
         return args;
     }
 
-    /** Parses a deadline command into description and by date */
+    /**
+     * Parses a deadline command into description and by date
+     */
     public static String[] parseDeadline(String args) throws BaymaxException {
         assert args != null : "Args should not be null";
 
@@ -70,7 +89,9 @@ public class Parser {
         return new String[]{desc, by};
     }
 
-    /** Parses an event command into description, from, and to */
+    /**
+     * Parses an event command into description, from, and to
+     */
     public static String[] parseEvent(String args) throws BaymaxException {
         assert args != null : "Args should not be null";
 
@@ -90,7 +111,9 @@ public class Parser {
         return new String[]{desc, from, to};
     }
 
-    /** Parses index from mark/unmark/delete commands */
+    /**
+     * Parses index from mark/unmark/delete commands
+     */
     public static int parseIndex(String arg) throws BaymaxException {
         assert arg != null : "Arg should not be null";
 

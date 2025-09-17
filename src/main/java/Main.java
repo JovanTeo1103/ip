@@ -8,12 +8,24 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Duke using FXML.
+ * Main class for the Baymax application.
+ * <p>
+ * This class sets up and launches the JavaFX GUI using FXML.
  */
 public class Main extends Application {
 
+    /**
+     * The main Baymax logic instance
+     */
     private Baymax baymax = new Baymax();
 
+
+    /**
+     * Starts the JavaFX application by loading the FXML layout and
+     * displaying the primary stage.
+     *
+     * @param stage the primary stage for this application
+     */
     @Override
     public void start(Stage stage) {
         try {
