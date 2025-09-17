@@ -92,6 +92,14 @@ public class DialogBox extends HBox {
      * @param commandType the type of command that produced this dialog
      */
     private void changeDialogStyle(String commandType) {
+        if (this.getAlignment() == Pos.TOP_LEFT) {
+            // Baymax messages: light gray background
+            dialog.setStyle("-fx-background-color: #f0f0f0; -fx-padding: 5px; -fx-background-radius: 10px;");
+        } else {
+            // User messages: light blue background
+            dialog.setStyle("-fx-background-color: #d0e7ff; -fx-padding: 5px; -fx-background-radius: 10px;");
+        }
+
         switch (commandType) {
         case "TodoCommand":
         case "DeadlineCommand":
