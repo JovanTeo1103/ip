@@ -42,8 +42,8 @@ public class Ui {
      */
     public String showWelcome() {
         return HORIZONTAL + "\n"
-                + "Hello! I'm Baymax\n"
-                + "What can I do for you?\n"
+                + "Hello! I'm Baymax, your personal healthcare companion...\n"
+                + "and chatbot. How may I assist you today?\n"
                 + HORIZONTAL;
     }
 
@@ -65,7 +65,7 @@ public class Ui {
      */
     public String showTaskAdded(Task t, int taskCount) {
         assert t != null : "Task should never be null";
-        return formatMessage("Got it. I've added this task:", t,
+        return formatMessage("Task successfully added. I will monitor it with care:", t,
                 "Now you have " + taskCount + " tasks in the list.");
     }
 
@@ -78,7 +78,7 @@ public class Ui {
      */
     public String showTaskRemoved(Task t, int taskCount) {
         assert t != null : "Task should never be null";
-        return formatMessage("Noted. I've removed this task:", t,
+        return formatMessage("Task removed, your task is now lighter:", t,
                 "Now you have " + taskCount + " tasks in the list.");
     }
 
@@ -90,7 +90,7 @@ public class Ui {
      */
     public String showTaskMarked(Task t) {
         assert t != null : "Task should never be null";
-        return formatMessage("Nice! I've marked this task as done:", t, null);
+        return formatMessage("Task successfully marked. I will monitor it with care:", t, null);
     }
 
     /**
@@ -101,7 +101,7 @@ public class Ui {
      */
     public String showTaskUnmarked(Task t) {
         assert t != null : "Task should never be null";
-        return formatMessage("OK, I've marked this task as not done yet:", t, null);
+        return formatMessage("Task successfully unmarked. I will monitor it with care:", t, null);
     }
 
     /**

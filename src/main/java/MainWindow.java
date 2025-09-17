@@ -66,7 +66,7 @@ public class MainWindow extends AnchorPane {
 
         try {
             if (input.isEmpty()) {
-                throw new BaymaxException("Please type something!");
+                throw new BaymaxException("I'm confused... please type something!");
             }
             String response = baymax.getResponse(input);
             String commandType = baymax.getCommandType();

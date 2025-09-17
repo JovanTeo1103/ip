@@ -38,7 +38,7 @@ public class Parser {
                 yield new EventCommand(parts[0], parts[1], parts[2]);
             }
             case "find" -> new FindCommand(args.trim());
-            default -> throw new BaymaxException("Unknown command: " + command);
+            default -> throw new BaymaxException("I'm confused... what is this command: " + command);
         };
     }
 
@@ -66,7 +66,7 @@ public class Parser {
     public static String parseTodo(String args) throws BaymaxException {
         assert args != null : "Input should never be null";
         if (args.isEmpty()) {
-            throw new BaymaxException("The description of a todo cannot be empty T.T");
+            throw new BaymaxException("On a scale of 1-10, your task description is currently 0!");
         }
         return args;
     }
@@ -78,13 +78,13 @@ public class Parser {
         assert args != null : "Args should not be null";
 
         int byIndex = args.indexOf("/by");
-        if (byIndex == -1) throw new BaymaxException("task.Deadline must have /by");
+        if (byIndex == -1) throw new BaymaxException("I'm confused... task.Deadline must have /by!");
 
         String desc = args.substring(0, byIndex).trim();
         String by = args.substring(byIndex + 3).trim();
 
         if (desc.isEmpty() || by.isEmpty())
-            throw new BaymaxException("The description of the deadline is invalid T.T");
+            throw new BaymaxException("I'm confused... the description of the deadline is invalid!");
 
         return new String[]{desc, by};
     }
@@ -99,14 +99,14 @@ public class Parser {
         int toIndex = args.indexOf("/to");
 
         if (fromIndex == -1 || toIndex == -1 || fromIndex >= toIndex)
-            throw new BaymaxException("The description of the event is invalid T.T");
+            throw new BaymaxException("I'm confused... the description of the event is invalid!");
 
         String desc = args.substring(0, fromIndex).trim();
         String from = args.substring(fromIndex + 5, toIndex).trim();
         String to = args.substring(toIndex + 3).trim();
 
         if (desc.isEmpty() || from.isEmpty() || to.isEmpty())
-            throw new BaymaxException("The description of the event is invalid T.T");
+            throw new BaymaxException("I'm confused... the description of the event is invalid!");
 
         return new String[]{desc, from, to};
     }
@@ -120,7 +120,7 @@ public class Parser {
         try {
             return Integer.parseInt(arg.trim()) - 1;
         } catch (NumberFormatException e) {
-            throw new BaymaxException("Please specify a task number T.T");
+            throw new BaymaxException("I'm confused... please specify a task number!");
         }
     }
 }
