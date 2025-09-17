@@ -34,28 +34,28 @@ All outputs follow a friendly, bordered format.
 `todo Buy groceries`
 
 **Expected Output:**
-
+````
 ___________________________________________________  
 Task successfully added. I will monitor it with care:  
 [ ] Buy groceries  
 Now you have 1 tasks in the list.
 ___________________________________________________  
 
+````
 ---
-
 ### 2. Adding a Deadline
 
 **Command:**  
 `deadline Submit report /by 2025-09-20`
 
 **Expected Output:**
-
+````
 ___________________________________________________  
 Task successfully added. I will monitor it with care:  
 [ ] Submit report (by: 20 Sep 2025)  
 Now you have 2 tasks in the list.
 ___________________________________________________  
-
+````
 ---
 
 ### 3. Marking a Task as Done
@@ -64,12 +64,12 @@ ___________________________________________________
 `done 1`
 
 **Expected Output:**
-
+````
 ___________________________________________________  
 Task successfully marked. I will monitor it with care:  
 [X] Buy groceries
 ___________________________________________________  
-
+````
 ---
 
 ### 4. Unmarking a Task
@@ -78,12 +78,12 @@ ___________________________________________________
 `undone 1`
 
 **Expected Output:**
-
+````
 ___________________________________________________  
 Task successfully unmarked. I will monitor it with care:  
 [ ] Buy groceries
 ___________________________________________________  
-
+````
 ---
 
 ### 5. Removing a Task
@@ -92,13 +92,13 @@ ___________________________________________________
 `delete 1`
 
 **Expected Output:**
-
+````
 ___________________________________________________  
 Task removed, your task is now lighter:  
 [ ] Buy groceries  
 Now you have 1 tasks in the list.
 ___________________________________________________  
-
+````
 ---
 
 ### 6. Listing All Tasks
@@ -107,13 +107,13 @@ ___________________________________________________
 `list`
 
 **Expected Output:**
-
+````
 ___________________________________________________  
 Here are the tasks in your list:
 1.[X] Buy groceries
 2.[ ] Submit report (by: 20 Sep 2025)
 ___________________________________________________  
-
+````
 ---
 
 ### 7. Finding Tasks by Keyword
@@ -122,12 +122,12 @@ ___________________________________________________
 `find groceries`
 
 **Expected Output:**
-
+````
 ___________________________________________________  
 Here are the matching tasks in your list:
 1.[X] Buy groceries
 ___________________________________________________  
-
+````
 ---
 
 ### 8. Adding an Event
@@ -136,13 +136,13 @@ ___________________________________________________
 `event Team meeting /at 2025-09-21 14:00-15:00`
 
 **Expected Output:**
-
+````
 ___________________________________________________  
 Task successfully added. I will monitor it with care:  
 [ ] Team meeting (at: 21 Sep 2025 14:00 - 15:00)  
 Now you have 3 tasks in the list.
 ___________________________________________________  
-
+````
 ---
 
 ## Tips
