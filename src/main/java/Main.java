@@ -37,6 +37,8 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setBaymax(baymax);  // inject the Baymax instance
+
+            stage.setTitle("Baymax Chatbot");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -26,7 +26,7 @@ All outputs follow a friendly, bordered format.
 
 ---
 
-## Commands
+## Features
 
 ### 1. Adding a Todo Task
 
