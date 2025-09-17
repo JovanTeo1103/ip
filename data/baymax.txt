@@ -1,5 +1,5 @@
 T | 0 | study 2040
 T | 1 | study 1521
 T | 1 | study 2030
-D | 0 | return book | 2019-12-02
-E | 0 | return book | 2019-12-02 | 2019-12-02
+D | 0 | return book | 2/12/2019
+E | 0 | return book | 2/12/2019 | 2/12/2020

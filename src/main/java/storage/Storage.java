@@ -3,7 +3,7 @@ package storage;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-
+import java.time.format.DateTimeFormatter;
 import exception.BaymaxException;
 
 import task.*;
@@ -121,16 +121,19 @@ public class Storage {
      */
     private String format(Task t) {
         String done = t.getStatus() ? "1" : "0";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy"); // matches constructor
 
         if (t instanceof Todo td) {
             return String.format("T | %s | %s", done, td.getDescription());
         } else if (t instanceof Deadline d) {
-            return String.format("D | %s | %s | %s", done, d.getDescription(), d.getBy().toString());
+            return String.format("D | %s | %s | %s", done, d.getDescription(), d.getBy().format(formatter));
         } else if (t instanceof Event e) {
-            return String.format("E | %s | %s | %s | %s", done, e.getDescription(), e.getFrom().toString(), e.getTo().toString());
+            return String.format("E | %s | %s | %s | %s", done, e.getDescription(),
+                    e.getFrom().format(formatter), e.getTo().format(formatter));
         } else {
             throw new IllegalStateException("Unknown task subclass");
         }
     }
+
 
 }
