@@ -30,7 +30,10 @@ All outputs follow a friendly, bordered format.
 
 ### 1. Adding a Todo Task
 
-**Command:**  
+**Command:**
+`todo <description>`
+
+**Example:**
 `todo Buy groceries`
 
 **Expected Output:**
@@ -46,6 +49,9 @@ ___________________________________________________
 ### 2. Adding a Deadline
 
 **Command:**  
+`deadline <description> /by <yyyy-mm-dd>`
+
+**Example:**  
 `deadline Submit report /by 2025-09-20`
 
 **Expected Output:**
@@ -61,6 +67,9 @@ ___________________________________________________
 ### 3. Marking a Task as Done
 
 **Command:**  
+`done <taskid>`
+
+**Example:**  
 `done 1`
 
 **Expected Output:**
@@ -75,6 +84,9 @@ ___________________________________________________
 ### 4. Unmarking a Task
 
 **Command:**  
+`undone <taskid>`
+
+**Example:**  
 `undone 1`
 
 **Expected Output:**
@@ -89,6 +101,9 @@ ___________________________________________________
 ### 5. Removing a Task
 
 **Command:**  
+`delete <taskid>`
+
+**Example:**  
 `delete 1`
 
 **Expected Output:**
@@ -119,6 +134,9 @@ ___________________________________________________
 ### 7. Finding Tasks by Keyword
 
 **Command:**  
+`find <keyword>`
+
+**Example:**  
 `find groceries`
 
 **Expected Output:**
@@ -133,13 +151,16 @@ ___________________________________________________
 ### 8. Adding an Event
 
 **Command:**  
-`event Team meeting /at 2025-09-21 14:00-15:00`
+`event <description> /from <yyyy-mm-dd> /to <yyyy-mm-dd>`
+
+**Example:**  
+`event Team meeting /from 2025-09-21 /to 2025-09-22`
 
 **Expected Output:**
 ````
 ___________________________________________________  
 Task successfully added. I will monitor it with care:  
-[ ] Team meeting (at: 21 Sep 2025 14:00 - 15:00)  
+[ ] Team meeting (from: 21 Sep 2025 to: 22 Sep 2025)  
 Now you have 3 tasks in the list.
 ___________________________________________________  
 ````
@@ -147,7 +168,7 @@ ___________________________________________________
 
 ## Tips
 
-- Commands are **case-insensitive**.
+- Commands are **case-sensitive**.
 - Always include **task index numbers** for commands like `done` and `delete`.
 - Use the exact date format when adding deadlines/events.
 - The GUI shows all tasks clearly, with status `[ ]` for not done and `[X]` for done.
