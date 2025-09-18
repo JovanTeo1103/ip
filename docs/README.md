@@ -40,7 +40,7 @@ All outputs follow a friendly, bordered format.
 ````
 ___________________________________________________  
 Task successfully added. I will monitor it with care:  
-[ ] Buy groceries  
+[T][ ] Buy groceries  
 Now you have 1 tasks in the list.
 ___________________________________________________  
 
@@ -49,16 +49,16 @@ ___________________________________________________
 ### 2. Adding a Deadline
 
 **Command:**  
-`deadline <description> /by <yyyy-mm-dd>`
+`deadline <description> /by <dd/mm/yyyy>`
 
 **Example:**  
-`deadline Submit report /by 2025-09-20`
+`deadline Submit report /by 20/09/2025`
 
 **Expected Output:**
 ````
 ___________________________________________________  
 Task successfully added. I will monitor it with care:  
-[ ] Submit report (by: 20 Sep 2025)  
+[D][ ] Submit report (by: Sep 20 2025)  
 Now you have 2 tasks in the list.
 ___________________________________________________  
 ````
@@ -76,7 +76,7 @@ ___________________________________________________
 ````
 ___________________________________________________  
 Task successfully marked. I will monitor it with care:  
-[X] Buy groceries
+[T][X] Buy groceries
 ___________________________________________________  
 ````
 ---
@@ -93,7 +93,7 @@ ___________________________________________________
 ````
 ___________________________________________________  
 Task successfully unmarked. I will monitor it with care:  
-[ ] Buy groceries
+[T][ ] Buy groceries
 ___________________________________________________  
 ````
 ---
@@ -110,7 +110,7 @@ ___________________________________________________
 ````
 ___________________________________________________  
 Task removed, your task is now lighter:  
-[ ] Buy groceries  
+[T][ ] Buy groceries  
 Now you have 1 tasks in the list.
 ___________________________________________________  
 ````
@@ -125,8 +125,8 @@ ___________________________________________________
 ````
 ___________________________________________________  
 Here are the tasks in your list:
-1.[X] Buy groceries
-2.[ ] Submit report (by: 20 Sep 2025)
+1.[T][X] Buy groceries
+2.[D][ ] Submit report (by: Sep 20 2025)
 ___________________________________________________  
 ````
 ---
@@ -143,7 +143,7 @@ ___________________________________________________
 ````
 ___________________________________________________  
 Here are the matching tasks in your list:
-1.[X] Buy groceries
+1.[T][X] Buy groceries
 ___________________________________________________  
 ````
 ---
@@ -151,16 +151,16 @@ ___________________________________________________
 ### 8. Adding an Event
 
 **Command:**  
-`event <description> /from <yyyy-mm-dd> /to <yyyy-mm-dd>`
+`event <description> /from <dd/mm/yyyy> /to <dd/mm/yyyy>`
 
 **Example:**  
-`event Team meeting /from 2025-09-21 /to 2025-09-22`
+`event Team meeting /from 21/09/2025 /to 22/09/2025`
 
 **Expected Output:**
 ````
 ___________________________________________________  
 Task successfully added. I will monitor it with care:  
-[ ] Team meeting (from: 21 Sep 2025 to: 22 Sep 2025)  
+[E][ ] Team meeting (from: Sep 21 2025 to: Sep 22 2025)  
 Now you have 3 tasks in the list.
 ___________________________________________________  
 ````
@@ -169,6 +169,7 @@ ___________________________________________________
 ## Tips
 
 - Commands are **case-sensitive**.
-- Always include **task index numbers** for commands like `done` and `delete`.
-- Use the exact date format when adding deadlines/events.
+- Always include **task index numbers** for commands like `done`, `mark`, `unmark` and `delete`.
+- Use the exact date format <dd/mm/yyyy> when adding deadlines/events.
 - The GUI shows all tasks clearly, with status `[ ]` for not done and `[X]` for done.
+- `[D]`, `[E]`, `[T]` denotes type `Deadline`, `Event`, `Todo` respectively. 
